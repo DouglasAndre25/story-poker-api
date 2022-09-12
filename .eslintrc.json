@@ -4,20 +4,12 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "eslint:recommended",
-        "prettier",
-        "plugin:prettier/recommended"
-    ],
+    "extends": "eslint:recommended",
     "overrides": [
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
-    "plugins": [
-        "eslint-plugin-import-helpers",
-        "prettier"
-    ],
     "rules": {
         "indent": [
             "error",
