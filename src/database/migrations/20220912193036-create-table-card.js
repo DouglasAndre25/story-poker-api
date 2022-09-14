@@ -1,3 +1,5 @@
+const { roomTypes } = require('../../config/common/constants')
+
 module.exports = {
     async up (queryInterface, Sequelize) {
         return queryInterface.createTable('card', {
@@ -13,7 +15,7 @@ module.exports = {
             },
             type: {
                 type: Sequelize.ENUM,
-                values: ['fibonacci', 'relative', 'sequential', 'cards'],
+                values: roomTypes,
                 allowNull: false
             }
         })

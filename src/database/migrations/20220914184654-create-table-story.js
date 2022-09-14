@@ -1,29 +1,28 @@
-const { participantTypes } = require('../../config/common/constants')
+const { statusTypes } = require('../../config/common/constants')
 
 module.exports = {
     async up (queryInterface, Sequelize) {
-        return queryInterface.createTable('participant', {
+        return queryInterface.createTable('story', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            nickname: {
+            title: {
                 allowNull: false,
-                type: Sequelize.STRING
+                type: Sequelize.STRING,
             },
-            type: {
+            estimation: {
+                type: Sequelize.STRING,
+            },
+            duration_time: {
+                type: Sequelize.DATE
+            },
+            status: {
                 type: Sequelize.ENUM,
-                values: participantTypes,
+                values: statusTypes,
                 allowNull: false
-            },
-            user_id: {
-                type: Sequelize.INTEGER,
-                reference: { model: 'user', key: 'id' },
-                onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
-                allowNull: true,
             },
             room_id: {
                 type: Sequelize.INTEGER,
@@ -36,7 +35,6 @@ module.exports = {
     },
 
     async down (queryInterface) {
-        return queryInterface.dropTable('participant')
+        return queryInterface.dropTable('story')
     }
-
 }

@@ -1,33 +1,29 @@
-const { participantTypes } = require('../../config/common/constants')
-
 module.exports = {
     async up (queryInterface, Sequelize) {
-        return queryInterface.createTable('participant', {
+        return queryInterface.createTable('story_participant', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            nickname: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
-            type: {
-                type: Sequelize.ENUM,
-                values: participantTypes,
-                allowNull: false
-            },
-            user_id: {
+            participant_id: {
                 type: Sequelize.INTEGER,
-                reference: { model: 'user', key: 'id' },
+                reference: { model: 'participant', key: 'id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
-                allowNull: true,
+                allowNull: false,
             },
-            room_id: {
+            story_id: {
                 type: Sequelize.INTEGER,
-                reference: { model: 'room', key: 'id' },
+                reference: { model: 'story', key: 'id' },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+                allowNull: false,
+            },
+            room_card_id: {
+                type: Sequelize.INTEGER,
+                reference: { model: 'room_card', key: 'id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
                 allowNull: false,
@@ -36,7 +32,6 @@ module.exports = {
     },
 
     async down (queryInterface) {
-        return queryInterface.dropTable('participant')
+        return queryInterface.dropTable('story_participant')
     }
-
 }
