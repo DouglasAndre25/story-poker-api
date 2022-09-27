@@ -1,4 +1,4 @@
-const { roomTypes } = require('../../config/common/constants')
+const { roomTypes } = require('../../common/constants')
 
 module.exports = {
     async up (queryInterface, Sequelize) {

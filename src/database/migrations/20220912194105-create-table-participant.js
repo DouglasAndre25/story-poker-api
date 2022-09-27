@@ -1,4 +1,4 @@
-const { participantTypes } = require('../../config/common/constants')
+const { participantTypes } = require('../../common/constants')
 
 module.exports = {
     async up (queryInterface, Sequelize) {

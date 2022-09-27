@@ -3,7 +3,7 @@ const {
     fibonacciCardValues,
     relativeCardValues,
     sequentialCardValues
-} = require('../../config/common/constants')
+} = require('../../common/constants')
 
 module.exports = {
     async up (queryInterface) {

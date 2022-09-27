@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const { statusTypes } = require('../../config/common/constants')
+const { statusTypes } = require('../../common/constants')
 const { Model } = Sequelize
 
 class story extends Model {

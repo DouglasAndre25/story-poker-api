@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const { roomTypes } = require('../../config/common/constants')
+const { roomTypes } = require('../../common/constants')
 const { Model } = Sequelize
 const { v4: uuidV4 } = require('uuid')
 

@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const { participantTypes } = require('../../config/common/constants')
+const { participantTypes } = require('../../common/constants')
 const { Model } = Sequelize
 
 class participant extends Model {

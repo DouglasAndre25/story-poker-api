@@ -1,4 +1,4 @@
-const { statusTypes } = require('../../config/common/constants')
+const { statusTypes } = require('../../common/constants')
 
 module.exports = {
     async up (queryInterface, Sequelize) {
