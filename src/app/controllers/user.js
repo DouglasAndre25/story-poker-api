@@ -1,7 +1,7 @@
-const messages = require('../../common/messages')
-const { userValidation } = require('../../common/validations')
+const { userValidation, loginValidation } = require('../../common/validations')
 const user = require('../models/user')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 const create = async (req, res, next) => {
     try {
@@ -14,11 +14,9 @@ const create = async (req, res, next) => {
 
         if(userExists) {
             return next({
-                errors: [
-                    messages.user.errors.userAlreadyExists
-                ],
+                message: 'user.errors.userAlreadyExists',
                 path: 'email',
-                name: 'ValidationError'
+                status: 400
             })
         }
 
@@ -28,9 +26,10 @@ const create = async (req, res, next) => {
             password: body.password
         })
 
-        const token = jwt.sign({ id: userResponse.id }, process.env.APP_SECRET, {
-            expiresIn: process.env.APP_SECRET_EXPIRES,
-        })
+        const token = jwt
+            .sign({ id: userResponse.id, type: 'account' }, process.env.APP_SECRET, {
+                expiresIn: process.env.APP_SECRET_EXPIRES,
+            })
 
         return res.status(201).send({ data: { user: {
             id: userResponse.id,
@@ -42,6 +41,45 @@ const create = async (req, res, next) => {
     }
 }
 
+const login = async (req, res, next) => {
+    try {
+        const { body } = req
+        await loginValidation.validate(body)
+
+        const userResponse = await user.findOne({
+            where: { email: body.email }
+        })
+
+        if(!userResponse)
+            return next({
+                message: 'login.errors.accountNotFound',
+                path: 'email',
+                status: 401
+            })
+
+        if(await !bcrypt.compare(body.password, userResponse.password))
+            return next({
+                message: 'login.errors.passwordNotMatch',
+                path: 'password',
+                status: 401
+            })
+
+        const token = jwt
+            .sign({ id: userResponse.id, type: 'account' }, process.env.APP_SECRET, {
+                expiresIn: process.env.APP_SECRET_EXPIRES,
+            })
+        
+        return res.send({ data: { user: {
+            id: userResponse.id,
+            name: userResponse.name,
+            email: userResponse.email
+        }, token }})
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
-    create
+    create,
+    login
 }

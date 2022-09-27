@@ -19,6 +19,15 @@ const userValidation = yup.object({
         }),
 })
 
+const loginValidation = yup.object({
+    email: yup.string(messages.general.invalidType)
+        .required(messages.general.required)
+        .email(messages.general.emailFormatInvalid),
+    password: yup.string(messages.general.invalidType)
+        .required(messages.general.required),
+})
+
 module.exports = {
-    userValidation
+    userValidation,
+    loginValidation
 }
