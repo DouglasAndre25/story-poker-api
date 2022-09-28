@@ -1,5 +1,6 @@
 const userControler = require('../app/controllers/user')
 const participantController = require('../app/controllers/participant')
+const cardController = require('../app/controllers/card')
 
 module.exports = {
     publicRoutes: [
@@ -17,6 +18,14 @@ module.exports = {
             route: '/participant',
             method: 'POST',
             query: participantController.create
+        }
+    ],
+    privateRoutes: [
+        {
+            route: '/cards',
+            method: 'GET',
+            query: cardController.getAll,
+            allow: ['account']
         }
     ]
 }
