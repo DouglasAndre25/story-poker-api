@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const errorHandler = require('./app/middlewares/errorHandler')
+const auth = require('./app/middlewares/auth')
 const { publicRoutes } = require('./common/routes')
 
 const routes = new Router()
@@ -23,6 +24,12 @@ const createRoute = (route) => {
 
 publicRoutes.forEach(route => {
     createRoute(route)
+})
+
+routes.use(auth)
+
+routes.get('/', (req, res) => {
+    return res.send({ ok: true })
 })
 
 routes.use(errorHandler)

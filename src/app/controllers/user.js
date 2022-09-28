@@ -37,7 +37,7 @@ const create = async (req, res, next) => {
             email: userResponse.email
         }, token }})
     } catch (error) {
-        next(error)
+        return next(error)
     }
 }
 
@@ -75,7 +75,7 @@ const login = async (req, res, next) => {
             email: userResponse.email
         }, token }})
     } catch (error) {
-        next(error)
+        return next(error)
     }
 }
 

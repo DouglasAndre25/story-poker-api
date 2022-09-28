@@ -1,4 +1,5 @@
 const yup = require('yup')
+const { participantTypes } = require('./constants')
 const messages = require('./messages')
 
 const userValidation = yup.object({
@@ -27,7 +28,18 @@ const loginValidation = yup.object({
         .required(messages.general.required),
 })
 
+const participantValidation = yup.object({
+    nickname: yup.string(messages.general.invalidType)
+        .required(messages.general.required),
+    type: yup.mixed().oneOf(participantTypes)
+        .required(messages.general.required),
+    user_id: yup.number(messages.general.invalidType),
+    room_id: yup.number(messages.general.invalidType)
+        .required(messages.general.required)
+})
+
 module.exports = {
     userValidation,
-    loginValidation
+    loginValidation,
+    participantValidation
 }
