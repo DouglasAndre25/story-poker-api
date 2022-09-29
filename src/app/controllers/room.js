@@ -1,4 +1,5 @@
 const { roomValidation } = require('../../common/validations')
+const { getPagination, getPagingData } = require('../helpers/pagination')
 const { connection } = require('../models')
 const card = require('../models/card')
 const room = require('../models/room')
@@ -47,6 +48,41 @@ const create = async (req, res, next) => {
     }
 }
 
+const getAll = async (req, res, next) => {
+    try {
+        const { query, user } = req
+        const { limit, offset } = getPagination(query.page, query.size)
+        
+        const rooms = await room.findAll({
+            limit,
+            offset,
+            where: {
+                owner_id: Number(user.id)
+            },
+            include: {
+                model: roomCard,
+                attributes: ['id'],
+                include: {
+                    model: card,
+                    attributes: ['id', 'value', 'type']
+                }
+            }
+        })
+
+        const count = await room.count({
+            where: {
+                owner_id: Number(user.id)
+            },
+        })
+
+        const paginationResponse = getPagingData(count, query.page, query.size)
+        return res.send({...paginationResponse, data: rooms})
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
-    create
+    create,
+    getAll
 }

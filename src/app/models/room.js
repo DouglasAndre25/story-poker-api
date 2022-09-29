@@ -24,11 +24,11 @@ class room extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.participant, { foreignKey: 'room_id', as: 'room'})
-        this.hasMany(models.story, { foreignKey: 'room_id', as: 'story' })
+        this.hasMany(models.participant, { foreignKey: 'room_id' })
+        this.hasMany(models.story, { foreignKey: 'room_id' })
         this.belongsToMany(models.card, { through: models.roomCard })
-        this.hasMany(models.roomCard, { foreignKey: 'room_id', as: 'card' })
-        this.belongsTo(models.user, { foreignKey: 'owner_id', as: 'owner' })
+        this.hasMany(models.roomCard, { foreignKey: 'room_id' })
+        this.belongsTo(models.user, { foreignKey: 'owner_id' })
     }
 }
 

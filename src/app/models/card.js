@@ -21,7 +21,7 @@ class card extends Model {
 
     static associate(models) {
         this.belongsToMany(models.room, { through: models.roomCard })
-        this.hasMany(models.roomCard, { foreignKey: 'card_id', as: 'card'})
+        this.hasMany(models.roomCard, { foreignKey: 'card_id' })
     }
 }
 

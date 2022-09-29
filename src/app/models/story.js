@@ -26,7 +26,7 @@ class story extends Model {
         this.belongsTo(models.room, { foreignKey: 'room_id' })
         this.belongsToMany(models.roomCard, { through: models.storyParticipant })
         this.belongsToMany(models.participant, { through: models.storyParticipant })
-        this.hasMany(models.storyParticipant, { foreignKey: 'story_id', as: 'story'})
+        this.hasMany(models.storyParticipant, { foreignKey: 'story_id' })
     }
 }
 

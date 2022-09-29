@@ -33,6 +33,12 @@ module.exports = {
             method: 'POST',
             query: roomController.create,
             allow: ['account']
+        },
+        {
+            route: '/room',
+            method: 'GET',
+            query: roomController.getAll,
+            allow: ['account']
         }
     ]
 }
