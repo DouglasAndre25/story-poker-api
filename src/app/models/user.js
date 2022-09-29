@@ -27,6 +27,7 @@ class user extends Model {
 
     static associate(models) {
         this.hasMany(models.participant, { foreignKey: 'user_id', as: 'user'})
+        this.hasMany(models.room, { foreignKey: 'owner_id', as: 'owner' })
     }
 }
 

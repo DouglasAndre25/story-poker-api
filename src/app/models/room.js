@@ -8,7 +8,7 @@ class room extends Model {
         super.init(
             {
                 name: Sequelize.STRING,
-                type: roomTypes
+                type: roomTypes,
             },
             {
                 sequelize,
@@ -28,6 +28,7 @@ class room extends Model {
         this.hasMany(models.story, { foreignKey: 'room_id', as: 'story' })
         this.belongsToMany(models.card, { through: models.roomCard })
         this.hasMany(models.roomCard, { foreignKey: 'room_id', as: 'card' })
+        this.belongsTo(models.user, { foreignKey: 'owner_id', as: 'owner' })
     }
 }
 

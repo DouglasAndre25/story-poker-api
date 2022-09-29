@@ -8,7 +8,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             room_id: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
                 reference: { model: 'room', key: 'id' },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',

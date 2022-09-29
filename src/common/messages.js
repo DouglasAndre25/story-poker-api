@@ -21,5 +21,10 @@ module.exports = {
             tokenNotProvided: 'É necessário enviar o token de autenticação para essa requisição',
             invalidToken: 'Token inválido'
         }
+    },
+    room: {
+        errors: {
+            minCardLength: 'É necessário ao menos um card para a criação de uma sala'
+        }
     }
 }
