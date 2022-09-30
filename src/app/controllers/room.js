@@ -5,6 +5,7 @@ const card = require('../models/card')
 const participant = require('../models/participant')
 const room = require('../models/room')
 const roomCard = require('../models/roomCard')
+const story = require('../models/story')
 
 const create = async (req, res, next) => {
     const transaction = await connection.transaction()
@@ -170,10 +171,49 @@ const exclude = async (req, res, next) => {
             transaction
         })
 
+        await story.destroy({
+            where: {
+                room_id: params.id
+            },
+            transaction
+        })
+
         await transaction.commit()
-        return res.send(204)
+        return res.sendStatus(204)
     } catch (error) {
         await transaction.rollback()
+        return next(error)
+    }
+}
+
+const getById = async (req, res, next) => {
+    try {
+        const { params, user } = req
+        const roomResponse = await room.findOne({
+            where: {
+                owner_id: Number(user.id),
+                id: params.id
+            },
+            include: [
+                {
+                    model: roomCard,
+                    attributes: ['id'],
+                    include: {
+                        model: card,
+                        attributes: ['id', 'value', 'type']
+                    },
+                },
+                {
+                    model: participant
+                },
+                {
+                    model: story,
+                }
+            ]
+        })
+    
+        return res.send({ data: roomResponse })
+    } catch (error) {
         return next(error)
     }
 }
@@ -182,5 +222,6 @@ module.exports = {
     create,
     getAll,
     update,
-    exclude
+    exclude,
+    getById
 }

@@ -51,6 +51,12 @@ module.exports = {
             method: 'DELETE',
             query: roomController.exclude,
             allow: ['account']
+        },
+        {
+            route: '/room/:id',
+            method: 'GET',
+            query: roomController.getById,
+            allow: ['account']
         }
     ]
 }
