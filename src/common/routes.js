@@ -26,37 +26,36 @@ module.exports = {
             route: '/cards',
             method: 'GET',
             query: cardController.getAll,
-            allow: ['account']
         },
         {
             route: '/room',
             method: 'POST',
             query: roomController.create,
-            allow: ['account']
         },
         {
             route: '/room',
             method: 'GET',
             query: roomController.getAll,
-            allow: ['account']
         },
         {
             route: '/room/:id',
             method: 'PUT',
             query: roomController.update,
-            allow: ['account']
         },
         {
             route: '/room/:id',
             method: 'DELETE',
             query: roomController.exclude,
-            allow: ['account']
         },
         {
             route: '/room/:id',
             method: 'GET',
             query: roomController.getById,
-            allow: ['account']
+        },
+        {
+            route: '/participant/:id',
+            method: 'DELETE',
+            query: participantController.exclude,
         }
     ]
 }

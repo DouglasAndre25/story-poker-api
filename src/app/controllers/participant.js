@@ -44,6 +44,23 @@ const create = async (req, res, next) => {
     }
 }
 
+const exclude = async (req, res, next) => {
+    try {
+        const { params } = req
+
+        await participant.destroy({
+            where: {
+                id: params.id
+            },
+        })
+
+        return res.sendStatus(204)
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
-    create
+    create,
+    exclude
 }
