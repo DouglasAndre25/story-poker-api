@@ -1,4 +1,4 @@
-const { userValidation, loginValidation } = require('../../common/validations')
+const { userValidation, loginValidation, userUpdateValidation } = require('../../common/validations')
 const user = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
@@ -79,7 +79,34 @@ const login = async (req, res, next) => {
     }
 }
 
+const update = async (req, res, next) => {
+    try {
+        const { params, body } = req
+        await userUpdateValidation.validate(body)
+
+        const userResponse = await user.update({
+            name: body.name,
+            email: body.email,
+            password: body.password
+        }, {
+            where: {
+                id: params.id
+            },
+            individualHooks: true,
+        })
+
+        return res.send({ data: { user: {
+            id: userResponse.id,
+            name: userResponse.name,
+            email: userResponse.email
+        }}})
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
-    login
+    login,
+    update
 }

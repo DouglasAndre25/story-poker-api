@@ -61,6 +61,11 @@ module.exports = {
             route: '/participant/:id',
             method: 'GET',
             query: participantController.getAll
+        },
+        {
+            route: '/user/:id',
+            method: 'PUT',
+            query: userControler.update
         }
     ]
 }

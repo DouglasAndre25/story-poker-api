@@ -46,9 +46,24 @@ const roomValidation = yup.object({
         .required(messages.general.required),
 })
 
+const userUpdateValidation = yup.object({
+    name: yup.string(messages.general.invalidType),
+    email: yup.string(messages.general.invalidType)
+        .email(messages.general.emailFormatInvalid),
+    password: yup.string(messages.general.invalidType),
+    confirmPassword: yup.string(messages.general.invalidType)
+        .when('password', (password, schema) => {
+            return schema.test({
+                test: confirmPassword => password === confirmPassword,
+                message: messages.user.errors.passwordsToBeEqual
+            })
+        }),
+})
+
 module.exports = {
     userValidation,
     loginValidation,
     participantValidation,
-    roomValidation
+    roomValidation,
+    userUpdateValidation
 }
