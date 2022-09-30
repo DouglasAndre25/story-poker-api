@@ -56,6 +56,11 @@ module.exports = {
             route: '/participant/:id',
             method: 'DELETE',
             query: participantController.exclude,
+        },
+        {
+            route: '/participant/:id',
+            method: 'GET',
+            query: participantController.getAll
         }
     ]
 }

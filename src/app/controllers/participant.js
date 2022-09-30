@@ -60,7 +60,25 @@ const exclude = async (req, res, next) => {
     }
 }
 
+const getAll = async (req, res, next) => {
+    try {
+        const { params } = req
+
+        const participantResponse = await participant.findAll({
+            where: {
+                room_id: params.id
+            },
+            attributes: ['id', 'nickname', 'type']
+        })
+
+        return res.send({ data: participantResponse })
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
-    exclude
+    exclude,
+    getAll
 }
