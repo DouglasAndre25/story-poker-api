@@ -86,6 +86,7 @@ const update = async (req, res, next) => {
     const transaction = await connection.transaction()
     try {
         const { body, user, params } = req
+        await roomValidation.validate({...body, owner_id: Number(user.id) })
 
         const currentRoom = await room.findOne({
             where: {
