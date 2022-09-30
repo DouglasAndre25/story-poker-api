@@ -82,7 +82,68 @@ const getAll = async (req, res, next) => {
     }
 }
 
+const update = async (req, res, next) => {
+    const transaction = await connection.transaction()
+    try {
+        const { body, user, params } = req
+
+        const currentRoom = await room.findOne({
+            where: {
+                id: params.id,
+                owner_id: user.id
+            }
+        })
+
+        const cardsResponse = await card.findAll({
+            where: {
+                id: body.cards,
+                type: body.type
+            }
+        })
+
+        await roomCard.destroy({
+            where: {
+                room_id: currentRoom.id
+            },
+            transaction
+        })
+
+        const roomCards = cardsResponse.map(cards => ({
+            room_id: currentRoom.id,
+            card_id: cards.id
+        }))
+
+        const roomCardResponse = await roomCard
+            .bulkCreate(roomCards, {
+                transaction,
+            })
+        
+        const roomResponse = await currentRoom.update(
+            {
+                name: body.name,
+                type: body.type,
+                owner_id: user.id
+            },
+            {
+                transaction,
+            }
+        )
+
+        await transaction.commit()
+        return res.status(200).send({
+            data: {
+                room: { ...roomResponse.dataValues, cards: cardsResponse },
+                roomCard: roomCardResponse
+            }
+        })
+    } catch (error) {
+        await transaction.rollback()
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    update
 }

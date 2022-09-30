@@ -39,6 +39,12 @@ module.exports = {
             method: 'GET',
             query: roomController.getAll,
             allow: ['account']
+        },
+        {
+            route: '/room/:id',
+            method: 'PUT',
+            query: roomController.update,
+            allow: ['account']
         }
     ]
 }
