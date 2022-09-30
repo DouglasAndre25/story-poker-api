@@ -2,6 +2,7 @@ const { roomValidation } = require('../../common/validations')
 const { getPagination, getPagingData } = require('../helpers/pagination')
 const { connection } = require('../models')
 const card = require('../models/card')
+const participant = require('../models/participant')
 const room = require('../models/room')
 const roomCard = require('../models/roomCard')
 
@@ -143,8 +144,43 @@ const update = async (req, res, next) => {
     }
 }
 
+const exclude = async (req, res, next) => {
+    const transaction = await connection.transaction()
+    try {
+        const { params } = req
+
+        await room.destroy({
+            where: {
+                id: params.id
+            },
+            transaction
+        })
+
+        await roomCard.destroy({
+            where: {
+                room_id: params.id
+            },
+            transaction
+        })
+
+        await participant.destroy({
+            where: {
+                room_id: params.id
+            },
+            transaction
+        })
+
+        await transaction.commit()
+        return res.send(204)
+    } catch (error) {
+        await transaction.rollback()
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
     getAll,
-    update
+    update,
+    exclude
 }

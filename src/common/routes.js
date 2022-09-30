@@ -45,6 +45,12 @@ module.exports = {
             method: 'PUT',
             query: roomController.update,
             allow: ['account']
+        },
+        {
+            route: '/room/:id',
+            method: 'DELETE',
+            query: roomController.exclude,
+            allow: ['account']
         }
     ]
 }
