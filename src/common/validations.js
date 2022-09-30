@@ -34,7 +34,7 @@ const participantValidation = yup.object({
     type: yup.mixed().oneOf(participantTypes)
         .required(messages.general.required),
     user_id: yup.number(messages.general.invalidType),
-    room_id: yup.number(messages.general.invalidType)
+    room_id: yup.string(messages.general.invalidType)
         .required(messages.general.required)
 })
 

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const create = async (req, res, next) => {
     try {
         const { body } = req
-        await participantValidation(body)
+        await participantValidation.validate(body)
 
         const participantResponse = await participant.create({
             nickname: body.nickname,
@@ -23,9 +23,14 @@ const create = async (req, res, next) => {
         }
 
         const token = jwt
-            .sign({ id: participantResponse.id, type: 'guest' }, process.env.APP_SECRET, {
-                expiresIn: process.env.APP_SECRET_EXPIRES,
-            })
+            .sign(
+                {
+                    id: body.user_id,
+                    participant_id: participantResponse.id,
+                    type: body.user_id ? 'account' : 'guest',
+                }, process.env.APP_SECRET, {
+                    expiresIn: process.env.APP_SECRET_EXPIRES,
+                })
 
         return res.status(201).send({
             data: {
@@ -34,6 +39,7 @@ const create = async (req, res, next) => {
             }
         })
     } catch (error) {
+        console.log(error)
         return next(error)
     }
 }
