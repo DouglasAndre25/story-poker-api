@@ -84,7 +84,7 @@ const update = async (req, res, next) => {
         const { params, body } = req
         await userUpdateValidation.validate(body)
 
-        const userResponse = await user.update({
+        const [, userResponse] = await user.update({
             name: body.name,
             email: body.email,
             password: body.password
@@ -93,13 +93,14 @@ const update = async (req, res, next) => {
                 id: params.id
             },
             individualHooks: true,
+            returning: true
         })
 
         return res.send({ data: { user: {
-            id: userResponse.id,
-            name: userResponse.name,
-            email: userResponse.email
-        }}})
+            id: userResponse[0].id,
+            name: userResponse[0].name,
+            email: userResponse[0].email
+        } }})
     } catch (error) {
         return next(error)
     }
