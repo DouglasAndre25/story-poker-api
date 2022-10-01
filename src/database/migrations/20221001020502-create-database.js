@@ -78,7 +78,7 @@ module.exports = {
             PRIMARY KEY ("id")
           );
           
-          ALTER TABLE "room" ADD CONSTRAINT "fk_room3_id" FOREIGN KEY ("owner_id") REFERENCES "user" ("id");
+          ALTER TABLE "room" ADD CONSTRAINT "fk_room3_id" FOREIGN KEY ("owner_id") REFERENCES "user" ("id") ON DELETE CASCADE;
           
           ALTER TABLE "room_card" ADD CONSTRAINT "fk_card_id" FOREIGN KEY ("card_id") REFERENCES "card" ("id") ON DELETE CASCADE;
           
