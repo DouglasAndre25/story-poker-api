@@ -5,6 +5,7 @@ const { publicRoutes, privateRoutes } = require('./common/routes')
 
 const routes = new Router()
 
+
 const createRoute = (route) => {
     switch(route.method) {
     case 'GET':
