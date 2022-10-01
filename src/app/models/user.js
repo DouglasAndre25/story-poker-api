@@ -32,8 +32,8 @@ class user extends Model {
     }
 
     static associate(models) {
-        this.hasMany(models.participant, { foreignKey: 'user_id'})
-        this.hasMany(models.room, { foreignKey: 'owner_id' })
+        this.hasMany(models.participant, { foreignKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade', hook: true })
+        this.hasMany(models.room, { foreignKey: 'owner_id', onDelete: 'cascade', onUpdate: 'cascade', hook: true })
     }
 }
 

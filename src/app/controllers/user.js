@@ -105,8 +105,27 @@ const update = async (req, res, next) => {
     }
 }
 
+const exclude = async (req, res, next) => {
+    try {
+        const { params } = req
+
+        const userResponse = await user.findOne({
+            where: {
+                id: params.id
+            }
+        })
+
+        await userResponse.destroy()
+
+        return res.sendStatus(204)
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
     login,
-    update
+    update,
+    exclude
 }

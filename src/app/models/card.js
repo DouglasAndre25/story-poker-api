@@ -13,15 +13,15 @@ class card extends Model {
         },
         {
             sequelize,
-            tableName: 'card'
+            tableName: 'card',
         })
 
         return this
     }
 
     static associate(models) {
-        this.belongsToMany(models.room, { through: models.roomCard })
-        this.hasMany(models.roomCard, { foreignKey: 'card_id' })
+        this.belongsToMany(models.room, { through: models.roomCard, onDelete: 'cascade', onUpdate: 'cascade', hook: true })
+        this.hasMany(models.roomCard, { foreignKey: 'card_id', onDelete: 'cascade', onUpdate: 'cascade', hook: true })
     }
 }
 

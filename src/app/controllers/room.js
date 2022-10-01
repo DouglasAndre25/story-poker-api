@@ -146,52 +146,28 @@ const update = async (req, res, next) => {
 }
 
 const exclude = async (req, res, next) => {
-    const transaction = await connection.transaction()
     try {
         const { params } = req
 
-        await room.destroy({
+        const roomResponse = await room.findOne({
             where: {
                 id: params.id
             },
-            transaction
         })
 
-        await roomCard.destroy({
-            where: {
-                room_id: params.id
-            },
-            transaction
-        })
+        await roomResponse.destroy()
 
-        await participant.destroy({
-            where: {
-                room_id: params.id
-            },
-            transaction
-        })
-
-        await story.destroy({
-            where: {
-                room_id: params.id
-            },
-            transaction
-        })
-
-        await transaction.commit()
         return res.sendStatus(204)
     } catch (error) {
-        await transaction.rollback()
         return next(error)
     }
 }
 
 const getById = async (req, res, next) => {
     try {
-        const { params, user } = req
+        const { params } = req
         const roomResponse = await room.findOne({
             where: {
-                owner_id: Number(user.id),
                 id: params.id
             },
             include: [

@@ -14,7 +14,7 @@ class participant extends Model {
             },
             {
                 sequelize,
-                tableName: 'participant'
+                tableName: 'participant',
             }
         )
 
@@ -24,9 +24,9 @@ class participant extends Model {
     static associate(models) {
         this.belongsTo(models.user, { foreignKey: 'user_id' })
         this.belongsTo(models.room, { foreignKey: 'room_id' })
-        this.belongsToMany(models.roomCard, { through: models.storyParticipant })
-        this.belongsToMany(models.story, { through: models.storyParticipant })
-        this.hasMany(models.storyParticipant, { foreignKey: 'participant_id' })
+        this.belongsToMany(models.roomCard, { through: models.storyParticipant, onDelete: 'cascade', onUpdate: 'cascade', hook: true })
+        this.belongsToMany(models.story, { through: models.storyParticipant, onDelete: 'cascade', onUpdate: 'cascade', hook: true })
+        this.hasMany(models.storyParticipant, { foreignKey: 'participant_id', onDelete: 'cascade', onUpdate: 'cascade', hook: true })
     }
 }
 

@@ -66,6 +66,11 @@ module.exports = {
             route: '/user/:id',
             method: 'PUT',
             query: userControler.update
+        },
+        {
+            route: '/user/:id',
+            method: 'DELETE',
+            query: userControler.exclude
         }
     ]
 }

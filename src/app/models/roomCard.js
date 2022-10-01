@@ -13,7 +13,7 @@ class roomCard extends Model {
         },
         {
             sequelize,
-            tableName: 'room_card'
+            tableName: 'room_card',
         })
 
         return this
@@ -22,9 +22,9 @@ class roomCard extends Model {
     static associate(models) {
         this.belongsTo(models.card, { foreignKey: 'card_id' })
         this.belongsTo(models.room, { foreignKey: 'room_id' })
-        this.belongsToMany(models.participant, { through: models.storyParticipant })
-        this.belongsToMany(models.story, { through: models.storyParticipant })
-        this.hasMany(models.storyParticipant, { foreignKey: 'room_card_id' })
+        this.belongsToMany(models.participant, { through: models.storyParticipant, onDelete: 'cascade', onUpdate: 'cascade', hook: true })
+        this.belongsToMany(models.story, { through: models.storyParticipant, onDelete: 'cascade', onUpdate: 'cascade', hook: true })
+        this.hasMany(models.storyParticipant, { foreignKey: 'room_card_id', onDelete: 'cascade', onUpdate: 'cascade', hook: true })
     }
 }
 
