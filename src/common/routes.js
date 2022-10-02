@@ -95,14 +95,9 @@ module.exports = {
             query: storyController.exclude
         },
         {
-            route: '/vote/',
+            route: '/vote',
             method: 'POST',
-            query: voteController.create
-        },
-        {
-            route: '/vote/:id',
-            method: 'PUT',
-            query: voteController.update
-        },
+            query: voteController.createOrUpdate
+        }
     ]
 }

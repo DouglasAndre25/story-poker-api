@@ -1,5 +1,13 @@
 const storyParticipant = require('../models/storyParticipant')
 
+const createOrUpdate = async (req, res, next) => {
+    const { body } = req
+    if(body.id)
+        return await update(req, res, next)
+    else
+        return await create(req, res, next)
+}
+
 const create = async (req, res, next) => {
     try {
         const { body, user } = req
@@ -18,13 +26,13 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const { params, body } = req
+        const { body } = req
 
         const [, voteResponse] = await storyParticipant.update({
             room_card_id: body.room_card_id
         }, {
             where: {
-                id: params.id
+                id: body.id
             },
             returning: true,
         })
@@ -38,6 +46,5 @@ const update = async (req, res, next) => {
 }
 
 module.exports = {
-    create,
-    update
+    createOrUpdate
 }
