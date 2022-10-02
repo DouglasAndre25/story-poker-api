@@ -14,14 +14,6 @@ const create = async (req, res, next) => {
             room_id: body.room_id
         })
 
-        if(body.user_id) {
-            return res.status(201).send({
-                data: {
-                    participant: participantResponse
-                }
-            })
-        }
-
         const token = jwt
             .sign(
                 {

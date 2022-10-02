@@ -17,7 +17,8 @@ module.exports = async (req, res, next) => {
 
         req.user = {
             id: decoded.id,
-            type: decoded.type
+            type: decoded.type,
+            participant_id: decoded.participant_id
         }
 
         return next()

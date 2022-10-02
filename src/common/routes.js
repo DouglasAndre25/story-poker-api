@@ -3,6 +3,7 @@ const participantController = require('../app/controllers/participant')
 const cardController = require('../app/controllers/card')
 const roomController = require('../app/controllers/room')
 const storyController = require('../app/controllers/story')
+const voteController = require('../app/controllers/vote')
 
 module.exports = {
     publicRoutes: [
@@ -92,6 +93,16 @@ module.exports = {
             route: '/story/:id',
             method: 'DELETE',
             query: storyController.exclude
+        },
+        {
+            route: '/vote/',
+            method: 'POST',
+            query: voteController.create
+        },
+        {
+            route: '/vote/:id',
+            method: 'PUT',
+            query: voteController.update
         },
     ]
 }

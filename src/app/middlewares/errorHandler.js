@@ -1,6 +1,7 @@
 const messages = require('../../common/messages')
 
 module.exports = (error, req, res, next) => {
+    console.log(error)
     if(error.name === 'ValidationError') {
         return res.status(400)
             .send({ error: {
