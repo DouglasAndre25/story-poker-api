@@ -56,7 +56,7 @@ const getAll = async (req, res, next) => {
         })
 
         return res.send({
-            data: {
+            data: query.status ? storyResponse : {
                 queue: storyResponse.filter(story => story.status === 'queue'),
                 completed: storyResponse.filter(story => story.status !== 'queue')
             }
