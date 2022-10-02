@@ -45,6 +45,7 @@ const create = async (req, res, next) => {
             }
         })
     } catch (error) {
+        console.log(error)
         await transaction.rollback()
         return next(error)
     }

@@ -2,6 +2,7 @@ const userControler = require('../app/controllers/user')
 const participantController = require('../app/controllers/participant')
 const cardController = require('../app/controllers/card')
 const roomController = require('../app/controllers/room')
+const storyController = require('../app/controllers/story')
 
 module.exports = {
     publicRoutes: [
@@ -71,6 +72,11 @@ module.exports = {
             route: '/user/:id',
             method: 'DELETE',
             query: userControler.exclude
+        },
+        {
+            route: '/story/',
+            method: 'POST',
+            query: storyController.create
         }
     ]
 }

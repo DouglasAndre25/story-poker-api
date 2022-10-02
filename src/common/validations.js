@@ -60,10 +60,18 @@ const userUpdateValidation = yup.object({
         }),
 })
 
+const storyValidation = yup.object({
+    title: yup.string(messages.general.invalidType)
+        .required(messages.general.required),
+    room_id: yup.string(messages.general.invalidType)
+        .required(messages.general.required),
+})
+
 module.exports = {
     userValidation,
     loginValidation,
     participantValidation,
     roomValidation,
-    userUpdateValidation
+    userUpdateValidation,
+    storyValidation
 }
