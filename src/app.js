@@ -16,7 +16,11 @@ class App {
     }
 
     socket() {
-        this.io = socketIo(this.server)
+        this.io = socketIo(this.server, {
+            cors: {
+                origin: '*'
+            }
+        })
         this.io.on('connection', socket => {
             console.log(`${socket.id} connected!`)
         })
@@ -44,23 +48,3 @@ class App {
 }
 
 module.exports = new App().server
-
-// require('dotenv/config')
-
-// const express = require('express')
-// const cors = require('cors')
-// const routes = require('./routes')
-
-// require('./app/models')
-
-// const app = express()
-// const server = require('http').createServer(app)
-// const io = require('socket.io')(server)
-
-// app.use(cors())
-// app.use(express.json())
-// app.use(routes)
-
-// require('./socket')(io)
-
-// module.exports = server
