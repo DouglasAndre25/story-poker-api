@@ -83,6 +83,10 @@ module.exports = {
             method: 'GET',
             query: storyController.getAll
         },
-
+        {
+            route: '/story/:id',
+            method: 'PUT',
+            query: storyController.update
+        },
     ]
 }

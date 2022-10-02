@@ -1,4 +1,4 @@
-const { storyValidation } = require('../../common/validations')
+const { storyValidation, storyUpdateValidation } = require('../../common/validations')
 const card = require('../models/card')
 const participant = require('../models/participant')
 const roomCard = require('../models/roomCard')
@@ -61,7 +61,33 @@ const getAll = async (req, res, next) => {
     }
 }
 
+const update = async (req, res, next) => {
+    try {
+        const { params, body } = req
+        await storyUpdateValidation.validate(body)
+
+        const [, storyResponse] = await story.update({
+            title: body.title,
+            estimation: body.estimation,
+            status: body.status,
+        },
+        {
+            where: {
+                id: params.id
+            },
+            returning: true
+        })
+
+        return res.send({
+            data: storyResponse[0]
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
-    getAll
+    getAll,
+    update
 }
