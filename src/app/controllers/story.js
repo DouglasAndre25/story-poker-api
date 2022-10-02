@@ -1,5 +1,9 @@
 const { storyValidation } = require('../../common/validations')
+const card = require('../models/card')
+const participant = require('../models/participant')
+const roomCard = require('../models/roomCard')
 const story = require('../models/story')
+const storyParticipant = require('../models/storyParticipant')
 
 const create = async (req, res, next) => {
     try {
@@ -20,6 +24,44 @@ const create = async (req, res, next) => {
     }
 }
 
+const getAll = async (req, res, next) => {
+    try {
+        const { params } = req
+
+        const storyResponse = await story.findAll({
+            where: {
+                room_id: params.id
+            },
+            include: {
+                model: storyParticipant,
+                attributes: ['id'],
+                include: [
+                    {
+                        model: participant
+                    },
+                    {
+                        model: roomCard,
+                        attributes: ['id'],
+                        include: {
+                            model: card
+                        }
+                    }
+                ]
+            }
+        })
+
+        return res.send({
+            data: {
+                queue: storyResponse.filter(story => story.status === 'queue'),
+                completed: storyResponse.filter(story => story.status !== 'queue')
+            }
+        })
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
-    create
+    create,
+    getAll
 }

@@ -77,6 +77,12 @@ module.exports = {
             route: '/story/',
             method: 'POST',
             query: storyController.create
-        }
+        },
+        {
+            route: '/story/:id',
+            method: 'GET',
+            query: storyController.getAll
+        },
+
     ]
 }
