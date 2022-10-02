@@ -88,5 +88,10 @@ module.exports = {
             method: 'PUT',
             query: storyController.update
         },
+        {
+            route: '/story/:id',
+            method: 'DELETE',
+            query: storyController.exclude
+        },
     ]
 }

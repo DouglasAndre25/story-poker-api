@@ -86,8 +86,27 @@ const update = async (req, res, next) => {
     }
 }
 
+const exclude = async (req, res, next) => {
+    try {
+        const { params } = req
+
+        const storyResponse = await story.findOne({
+            where: {
+                id: params.id
+            }
+        })
+
+        await storyResponse.destroy()
+
+        return res.sendStatus(204)
+    } catch (error) {
+        return next(error)
+    }
+}
+
 module.exports = {
     create,
     getAll,
-    update
+    update,
+    exclude
 }
