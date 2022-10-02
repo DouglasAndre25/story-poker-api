@@ -26,12 +26,17 @@ const create = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
     try {
-        const { params } = req
+        const { params, query } = req
+
+        const where = {
+            room_id: params.id,
+        }
+
+        if(query.status)
+            where.status = query.status
 
         const storyResponse = await story.findAll({
-            where: {
-                room_id: params.id
-            },
+            where,
             include: {
                 model: storyParticipant,
                 attributes: ['id'],
