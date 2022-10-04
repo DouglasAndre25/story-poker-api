@@ -57,7 +57,9 @@ const login = async (req, res, next) => {
                 status: 401
             })
 
-        if(await !bcrypt.compare(body.password, userResponse.password))
+        const passwordVerify = await bcrypt
+            .compare(body.password, userResponse.password)
+        if(!passwordVerify)
             return next({
                 message: 'login.errors.passwordNotMatch',
                 path: 'password',
